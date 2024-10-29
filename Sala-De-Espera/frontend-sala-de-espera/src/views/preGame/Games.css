@@ -1,0 +1,55 @@
+.pregame {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pregame h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.pregame button {
+    background-color: #08979D;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.pregame button:hover {
+    background-color: #007B82;
+    transform: scale(1.05);
+}
+
+.pregame a {
+    text-decoration: none;
+}
+
+.pregame a button {
+    margin-bottom: 20px;
+}
+
+.pregame ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.pregame li {
+    background-color: white;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
