@@ -6,7 +6,6 @@ import AuthProvider from '../contexts/auth/AuthProvider'
 import SocketProvider from '../contexts/sockets/SocketProvider'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <Router>
