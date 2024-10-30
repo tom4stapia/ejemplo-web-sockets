@@ -1,2 +1,5 @@
-# ejemplo-web-sockets
-Ejemplo sala de espera haciendo uso de web sockets
+# Código Cápsula 9 - IIC2513
+
+Código que se utilizó para mostrar la implementación de web sockets al proyecto semestral.
+
+Cápsula en: 
