@@ -3,6 +3,7 @@ import Navbar from '../common/navbar/Navbar'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Routing from '../routes/Routing'
 import AuthProvider from '../contexts/auth/AuthProvider'
+import SocketProvider from '../contexts/sockets/SocketProvider'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -10,8 +11,10 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-      <Navbar />
-      <Routing />
+        <SocketProvider>
+          <Navbar />
+          <Routing />
+      </SocketProvider>
       </AuthProvider>
     </Router>
   )

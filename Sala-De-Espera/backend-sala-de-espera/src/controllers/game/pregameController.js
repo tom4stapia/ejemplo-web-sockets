@@ -1,4 +1,5 @@
 const { Game, Player} = require('../../models'); 
+const { findUser } = require('../../sockets');
 const { v4: uuidv4 } = require('uuid'); 
 
 const createGame = async (ctx) => {
@@ -37,6 +38,16 @@ const joinGame = async (ctx) => {
     }
 
     await game.addPlayer(player); 
+
+    const newPlayersInGame = await game.getPlayers();
+
+    newPlayersInGame.forEach(async (player) => {
+      const user = findUser(player.userId);
+      if (user) {
+        ctx.io.to(user.socketId).emit('playerJoined', { gameId: game.identifier, players: newPlayersInGame})
+      }
+    });
+
     ctx.status = 200; 
     ctx.body = { message: 'El jugador se ha unido al juego' };
   } catch (error) {

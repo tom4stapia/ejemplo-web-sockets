@@ -1,8 +1,9 @@
 // src/components/WaitingRoom.js
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import { fetchPlayers } from "../../api/sala-de-espera";
 import ToastManager from "../../common/toasts/Toast";
+import { SocketContext } from "../../contexts/sockets/SocketContext";
 import "./WaitingRoom.css"; 
 
 export default function WaitingRoom() {
@@ -11,6 +12,15 @@ export default function WaitingRoom() {
     const [searchParams] = useSearchParams();
     const gameId = searchParams.get("identifier");
     const gameTitle = searchParams.get("title");
+    const { socket } = useContext(SocketContext);
+
+    const addToast = (message, type) => {
+        setToasts((prevToasts) => [...prevToasts, { message, type }]);
+    };
+
+    const removeToast = (index) => {
+        setToasts((prevToasts) => prevToasts.filter((_, i) => i !== index));
+    };
 
     useEffect(() => {
         const fetchPlayerData = async () => {
@@ -28,13 +38,22 @@ export default function WaitingRoom() {
         fetchPlayerData();
     }, [gameId]);
 
-    const addToast = (message, type) => {
-        setToasts((prevToasts) => [...prevToasts, { message, type }]);
-    };
+    useEffect(() => {
+        if (!gameId || !socket) return;
 
-    const removeToast = (index) => {
-        setToasts((prevToasts) => prevToasts.filter((_, i) => i !== index));
-    };
+        console.log("Escuchando a servidor en canal playerJoined");
+
+        const handlePlayerUpdate = (data) => {
+            if (data.gameId !== gameId) return;
+            setPlayers(data.players);
+        }
+        
+        socket.current?.on('playerJoined', handlePlayerUpdate)
+
+        return () => {
+            socket.current?.off('playerJoined', handlePlayerUpdate)
+        }
+    }, [socket.current]);
 
     return (
         <div className="waiting-room">
